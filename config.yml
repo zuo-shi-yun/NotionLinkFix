@@ -1,0 +1,94 @@
+# ----------------- Clash-related Configuration -----------------
+# Whether to enable proxy.
+# If true, the system will perform both proxy and non-proxy tests when verifying link validity.
+# If false, only non-proxy tests will be performed,
+# and no need to modify other Clash-related configurations.
+"enable_proxy": True
+
+# URL to download Clash configuration file.
+# This is the VPN subscription URL,
+# and the system will download the Clash configuration file from this link.
+# The configuration file should be in YAML format for Clash.
+"clash_profile_url": ""
+
+# The key name for the HTTP proxy port in the Clash configuration file and the Clash HTTP proxy port.
+"http_port_name": "port", # The key name for the HTTP proxy port in the Clash configuration file, typically "port".
+"http_port": 23128 # 23128 is an uncommon port, it can be left unchanged unless necessary.
+
+# The key name for the API port in the Clash configuration file and the API port.
+"api_port_name": "external-controller", # The key name for the API port in the Clash configuration file, typically "external-controller".
+"api_port": 23129 # 23129 is an uncommon port, it can be left unchanged unless necessary.
+
+# The key name for the SOCKS proxy port in the Clash configuration file and the Clash SOCKS proxy port.
+# The system does not send SOCKS requests, and this is configured to avoid conflicts with the existing Clash setup if Clash is already running on the system.
+"socks_port_name": "socks-port", # The key name for the SOCKS proxy port in the Clash configuration file, typically "socks-port".
+"socks_port": 23130 # 23130 is an uncommon port, it can be left unchanged unless necessary.
+
+# The key name for the log level in the Clash configuration file and the Clash log level.
+# Log levels include debug, info, warning, error. Configuring this option will simplify Clash log output.
+"clash_log_level_name": "log-level", # The key name for the log level in the Clash configuration file, typically "log-level".
+"clash_log_level": "error", # If the level is set too low, excessive logs may be generated during link verification. Do not modify unless necessary.
+
+# The name of the Clash proxy node.
+# Please select the node that appears in the "Proxies" section under the "Global" column.
+"profile_node": "" # Pay attention to case sensitivity.
+
+# ----------------- Notion-related Configuration -----------------
+# The Notion page ID to store all links.
+"notion_backup_page_id": ""
+
+# The Notion page ID to store valid links.
+"notion_valid_link_page_id": ""
+
+# Notion API Key.
+# Each API key can send a maximum of two requests per second, which may affect concurrency efficiency.
+# It has been tested that two API keys provide high efficiency, and using four does not significantly improve the efficiency.
+"notion_api_key":
+  - ""
+
+# The callout content in the Notion page for valid links. {time} will be replaced by the detection time.
+"callout_content": "Detected at: {time}"
+
+# ----------------- Link Verification-related Configuration -----------------
+# Maximum number of concurrent requests.
+# Note that this value is not only the maximum concurrency for asynchronous clients but also the maximum thread count when simulating asynchronous requests using a thread pool. A value that is too large may cause system lag.
+"max_request_cnt": 150 # Do not modify unless necessary.
+
+# Request timeout duration. Requests exceeding this time will be considered as unable to connect. Do not modify unless necessary.
+"request_timeout": 10 # Unit: seconds.
+
+# Maximum number of retries for requests.
+"max_retries": 5 # Do not modify unless necessary.
+
+# Whether to enable certificate verification.
+# If true, certificate verification will not be ignored, which may cause HTTPS links to be unreachable.
+"certificate_verification": False
+
+# URLs to ignore validity check.
+# If a link matches one of the URLs in this list, it will be considered reachable even if it fails the validity check.
+"ignore_validity_check_url":
+  - ""
+
+# ----------------- Email-related Configuration -----------------
+# Whether to send emails.
+# If false, no emails will be sent, and no further email-related configuration needs to be modified.
+"send_email": True
+
+# The email account for sending emails.
+"email_addr": "" # e.g., 123@gmail.com
+
+# The email account password. For QQ mail and similar, use an authorization code instead of the password.
+"email_password": "" # Authorization code/password.
+
+# The email server for sending emails.
+"email_host": 'smtp.qq.com' # e.g., smtp.gmail.com.
+
+# The email port for sending emails.
+"email_port": 465
+
+# Email content.
+# {valid_url_cnt} will be replaced by the number of valid links.
+# {all_url_cnt} will be replaced by the total number of links.
+"email_content": |
+  The notion link was detected and the page was updated successfully.
+  Link validity: {valid_url_cnt}/{all_url_cnt}
