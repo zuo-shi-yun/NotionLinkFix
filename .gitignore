@@ -209,6 +209,5 @@ __marimo__/
 /logs/
 /clash/clash_config.yaml
 /url_check_result/
-/clash/cache.db
 /clash/config.yaml
-/clash/clash-linux-amd64
+/clash/cache.db

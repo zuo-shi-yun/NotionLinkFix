@@ -32,7 +32,7 @@ class Proxy:
         self.clash_log_level_name = get_config('clash_log_level_name')  # Clash log level name
         self.clash_log_level = get_config('clash_log_level')  # Clash log level
 
-        self.clash_path = 'clash-windows'
+        self.clash_path = 'clash-linux-amd64'
         self.clash_config_path = 'config.yaml'
         self.profile_file = None  # clash profile file
         self.clash = None  # Clash instance
@@ -57,7 +57,7 @@ class Proxy:
 
                 with open(f"clash/{self.clash_config_path}", "wb") as file:
                     file.write(response.content)
-                    print_var(yaml_content, 'clash_yaml_content', sort_dicts=False)
+                    print_var(yaml_content, 'yaml_content', sort_dicts=False)
                     return
             except Exception:
                 attempt += 1
@@ -137,7 +137,7 @@ class Proxy:
             self.modify_profile_file()
             logger.info('Successfully modified config file')
 
-            cmd = [f'clash/{self.clash_path}', "-d", 'clash/']
+            cmd = ['./clash/clash-linux-amd64', "-d", './clash']
             self.clash = subprocess.Popen(cmd)
             time.sleep(5)  # wait clash start
 
