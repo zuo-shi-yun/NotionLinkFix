@@ -64,7 +64,7 @@ Download the program and start checking the validity of your links. Testing 300 
   increase concurrency efficiency. Based on testing, two keys are sufficient to achieve high efficiency, and there is no
   significant improvement in efficiency when using more than four keys.
 - Record the IDs of the two pages. For the process of querying the ID, refer
-  to [here](https://developers.notion.com/docs/working-with-page-content#creating-a-page-with-content)of the "Where can
+  to [here](https://developers.notion.com/docs/working-with-page-content#creating-a-page-with-content) of the "Where can
   I find my page's ID?" section.
 
 </details>
@@ -111,7 +111,7 @@ Download the program and start checking the validity of your links. Testing 300 
     - Source version for Windows x64 system
     - Source version for Linux amd64 system
 - Please download the appropriate release version based on your needs.
-- If you wish to modify the code, please note that the system's**minimum Python version requirement is 3.11.**
+- If you wish to modify the code, please note that the system's **minimum Python version requirement is 3.11.**
 - All release versions come with the Clash core, so there is no need to download it separately.
 - If you wish to use this project on other systems or with a different Clash core, please refer to "Expand System /
   Modify Clash Version."
@@ -123,7 +123,7 @@ Download the program and start checking the validity of your links. Testing 300 
 
 1. Download the release version or clone the branch corresponding to your operating system from this repository.<br>
    If you downloaded the source version, you will also need to install the`requirements.txt`dependencies. Please note
-   that the system's**minimum Python version requirement is 3.11**
+   that the system's **minimum Python version requirement is 3.11**
 2. Configure the Clash proxy.<br>If you do not want to send requests through a proxy, set `enable_proxy` in the
    `config.yml` file to `False` and ignore the rest of this entry.
     1. Modify the value of `clash_profile_url` in the `config.yml` file.
@@ -216,7 +216,10 @@ The default branch is windows, if you want to use this project under linux syste
 
 <details>
 <summary>Add a new link validation method</summary>
-The link validation methods stored in the `verify_url.py` file are well-designed, you only need to inherit from the corresponding base class and implement some necessary and simple abstract functions, the program will automatically call your class and check the connectivity of the link, you do not need to pay attention to the validation logic.
+
+The link validation methods stored in the `verify_url.py` file are well-designed, you only need to inherit from the
+corresponding base class and implement some necessary and simple abstract functions, the program will automatically call
+your class and check the connectivity of the link, you do not need to pay attention to the validation logic.
 
 If your authentication method natively supports asynchronous , please inherit `AsyncSendAgentBaseClass` class ,
 otherwise inherit `ThreadedSendAgentBaseClass` class .

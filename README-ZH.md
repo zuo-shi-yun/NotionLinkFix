@@ -52,7 +52,6 @@
 - 申请成功后，记录api
   key并将key和存储所有链接的notion页面、存储有效链接的notion页面关联。关联流程参阅[这里](https://developers.notion.com/docs/create-a-notion-integration#give-your-integration-page-permissions)。
 - 每个key每秒最多发送2个请求，因此可以通过申请并关联多个key提高并发效率。经实测，两个key就可以达到较高的效率，超过4个key后效率无明显提升。
--
 
 记录两个页面的id，查询id流程参阅[这里](https://developers.notion.com/docs/working-with-page-content#creating-a-page-with-content)
 的”Where can I find my page's ID?”章节。
@@ -175,8 +174,11 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 
 <details>
 <summary>添加新的链接验证方式</summary>
+
 存储在`verify_url.py`文件中的链接验证方式设计精良，只需要继承对应的基类并实现一些必要且简单的抽象函数，程序将自动调用你的类并检测链接的连通性，你无需关注验证逻辑。
+<br>
 若你的验证方式原生支持异步，请继承`AsyncSendAgentBaseClass`类，反之继承`ThreadedSendAgentBaseClass`类。
+<br>
 程序有完善的异常管理措施，除非某个异常是你预期出现的，那么你可以不使用任何`try`块。随意的`try`块可能导致程序错误的判断链接是否有效。
 <details>
 <summary>链接验证基类：`SendAgentBaseClass`</summary>
