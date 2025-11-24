@@ -12,22 +12,22 @@
 "clash_profile_url": ""
 
 # The key name for the HTTP proxy port in the Clash configuration file and the Clash HTTP proxy port.
-"http_port_name": "port", # The key name for the HTTP proxy port in the Clash configuration file, typically "port".
+"http_port_name": "port" # The key name for the HTTP proxy port in the Clash configuration file, typically "port".
 "http_port": 23128 # 23128 is an uncommon port, it can be left unchanged unless necessary.
 
 # The key name for the API port in the Clash configuration file and the API port.
-"api_port_name": "external-controller", # The key name for the API port in the Clash configuration file, typically "external-controller".
+"api_port_name": "external-controller" # The key name for the API port in the Clash configuration file, typically "external-controller".
 "api_port": 23129 # 23129 is an uncommon port, it can be left unchanged unless necessary.
 
 # The key name for the SOCKS proxy port in the Clash configuration file and the Clash SOCKS proxy port.
 # The system does not send SOCKS requests, and this is configured to avoid conflicts with the existing Clash setup if Clash is already running on the system.
-"socks_port_name": "socks-port", # The key name for the SOCKS proxy port in the Clash configuration file, typically "socks-port".
+"socks_port_name": "socks-port" # The key name for the SOCKS proxy port in the Clash configuration file, typically "socks-port".
 "socks_port": 23130 # 23130 is an uncommon port, it can be left unchanged unless necessary.
 
 # The key name for the log level in the Clash configuration file and the Clash log level.
 # Log levels include debug, info, warning, error. Configuring this option will simplify Clash log output.
 "clash_log_level_name": "log-level", # The key name for the log level in the Clash configuration file, typically "log-level".
-"clash_log_level": "error", # If the level is set too low, excessive logs may be generated during link verification. Do not modify unless necessary.
+"clash_log_level": "error" # If the level is set too low, excessive logs may be generated during link verification. Do not modify unless necessary.
 
 # The name of the Clash proxy node.
 # Please select the node that appears in the "Proxies" section under the "Global" column.

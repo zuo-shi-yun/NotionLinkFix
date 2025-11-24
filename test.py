@@ -14,14 +14,20 @@ def check_clash_config_file():
     p.download_profile_file()
 
 
-async def test_verify_url():
+async def test_verify_url(url=None):
     disable_urllib3_warning()
+
+    if url is None:
+        url = ['https://www.x.com']
+        name = ['Twitter']
+    else:
+        name = ['Test']
 
     with Proxy():
         send_agents = [j for i in SendAgentBaseClass.__subclasses__() for j in i.__subclasses__()]
         for send_agent in send_agents:
             async with send_agent() as agent:
-                await agent.run(['https://www.x.com'], ['Twitter'], ['test'])
+                await agent.run(url, name, name)
 
 
 def check_notion_backup_page_content():
@@ -43,6 +49,7 @@ def show_menu():
     print("2. Test URL Verification")
     print("3. Check Notion Backup Page Content")
     print("4. Check Send Email")
+    print("5. check one url")
     print("0. Exit")
     print("=" * 50)
 
@@ -61,6 +68,9 @@ def show_menu():
     elif choice == '4':
         logger.info("Running: Check Send Email...")
         check_send_email()
+    elif choice == '5':
+        url = input('Please enter the url to be tested: ')
+        asyncio.run(test_verify_url(url))
     elif choice == '0':
         logger.info("Exiting program")
     else:
