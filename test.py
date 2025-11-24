@@ -21,6 +21,7 @@ async def test_verify_url(url=None):
         url = ['https://www.x.com']
         name = ['Twitter']
     else:
+        url = [url]
         name = ['Test']
 
     with Proxy():
@@ -53,7 +54,7 @@ def show_menu():
     print("0. Exit")
     print("=" * 50)
 
-    choice = input("\nPlease select a test to run (0-4): ").strip()
+    choice = input("\nPlease select a test to run (0-5): ").strip()
 
     if choice == '1':
         logger.info("Running: Check Clash Configuration File...")
@@ -79,7 +80,7 @@ def show_menu():
 
 def main():
     try:
-        init('DEBUG', 'testProject')
+        init('INFO', 'testProject')
         show_menu()
         logger.info("Test completed")
     except Exception as e:

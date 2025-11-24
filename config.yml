@@ -26,7 +26,7 @@
 
 # The key name for the log level in the Clash configuration file and the Clash log level.
 # Log levels include debug, info, warning, error. Configuring this option will simplify Clash log output.
-"clash_log_level_name": "log-level", # The key name for the log level in the Clash configuration file, typically "log-level".
+"clash_log_level_name": "log-level" # The key name for the log level in the Clash configuration file, typically "log-level".
 "clash_log_level": "error" # If the level is set too low, excessive logs may be generated during link verification. Do not modify unless necessary.
 
 # The name of the Clash proxy node.
