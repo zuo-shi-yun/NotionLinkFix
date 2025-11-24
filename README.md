@@ -129,20 +129,20 @@ Download the program and start checking the validity of your links. Testing 300 
     1. Modify the value of `clash_profile_url` in the `config.yml` file.
     2. Run the `test.exe` or `test.py` file and select option 1.
     3. After the clash configuration file has been downloaded successfully, review the `clash/config.yaml` file and
-       modify the rest of the configuration in the `*Clash-related Configuration*` configuration item accordingly.
+       modify the rest of the configuration in the `Clash-related Configuration` configuration item accordingly.
     4. Once the configuration is complete, run `test` again and select option 2. This test will check the connectivity
        of `x.com`, and normally at least one of the tests will come back true. Please observe the output to test if the
        agent is configured properly.
 3. Notion-related configuration:
     1. Use the api key and page id obtained in "Necessary Preparation/Preparation of Notion" to complete the
-       configuration under `*Notion-related Configuration*` in the `config.yml` file.
+       configuration under `Notion-related Configuration` in the `config.yml` file.
     2. Run `test` and select option 3, the system will output the content of the notification page that stores all
        the links in a visual form, observe the output to check if the configuration is correct.
 4. Configure the email sending function.
    <br>
    If you do not want to send email, set `send_email` to `False` in the `config.yml` file and ignore the rest of
    this entry.
-    1. Complete all configurations under `*Email-related Configuration*` in the `config.yml` file, using the
+    1. Complete all configurations under `Email-related Configuration` in the `config.yml` file, using the
        mailbox-related information you obtained in Necessary Preparation/Preparing Mailboxes.
     2. Run `test` and select option 4 to send an email to the mailbox you specified. Observe the output and check
        the mailbox to see if the configuration is correct.
@@ -153,7 +153,7 @@ Download the program and start checking the validity of your links. Testing 300 
     3. Due to the strong anti-crawling ability of some websites, the system may misjudge the URL as invalid.
 
        If you are sure that this is a false positive, copy the link and paste it into the
-       `ignore_validity_check_url` under `*Link Verification-related Configuration*` in the `config.yml` file.
+       `ignore_validity_check_url` under `Link Verification-related Configuration` in the `config.yml` file.
 
        Links configured in this item will be considered connectable regardless of the test results. This item
        supports adding multiple links.
@@ -206,7 +206,7 @@ The default branch is windows, if you want to use this project under linux syste
       support
       clash control via api.
 - Please place your clash kernel in the `clash` directory and record the filename.
-- Modify the `*self*.clash_path` variable in the `Proxy` class of the `Proxy.py` file to the value of the clash kernel
+- Modify the `self.clash_path` variable in the `Proxy` class of the `Proxy.py` file to the value of the clash kernel
   filename recorded in the previous step.
 - Run option 2 of `test` to check if the modification was successful.
 - You may also need to modify the `change_clash_proxy`, `open_clash_proxy`, and `close_clash_proxy` functions in the
@@ -225,7 +225,7 @@ Programs have well-established exception management measures, unless a particula
 then you may not use any `try` blocks. Arbitrary `try` blocks can cause the program to incorrectly determine whether a
 link is valid or not.
 <details>
-<summary>Link validation base class: `SendAgentBaseClass`</summary>
+<summary> Link validation base class: SendAgentBaseClass </summary>
 
 This is the base class for `AsyncSendAgentBaseClass` and `ThreadedSendAgentBaseClass` that encapsulates the link
 validation logic (`run`function) and provides some utility methods.
@@ -240,18 +240,18 @@ You need to implement the following abstract functions, please refer to the sour
       the request.
     - You can implement your own detection logic, such as whether the response contains `url_name`, whether the response
       is Cloudflare and other anti-crawler mechanism to intercept.
-    - The simplest way is to determine if the response status code is in `*self*.correct_status_code`. This is how the
+    - The simplest way is to determine if the response status code is in `self.correct_status_code`. This is how the
       original program is designed.
 
 Class properties that may help you:
 
-1. `*self*.proxy`: records the proxy configuration in the `config.yml` file.
-2. `*self*.timeout`: the request timeout. Requests exceeding this value will be treated as request failures.
-3. `*self*.USER_AGENTS`: stores a number of user clients to be used for request headers, which will be called in the
+1. `self.proxy`: records the proxy configuration in the `config.yml` file.
+2. `self.timeout`: the request timeout. Requests exceeding this value will be treated as request failures.
+3. `self.USER_AGENTS`: stores a number of user clients to be used for request headers, which will be called in the
    `get_random_headers` function.
-4. `*self*.CERTIFICATE_VERIFICATION`: records whether to ignore certificate verification configuration items in the
+4. `self.CERTIFICATE_VERIFICATION`: records whether to ignore certificate verification configuration items in the
    `config.yml` file.
-5. `*self*.correct_status_code`: status code representing a successful response.
+5. `self.correct_status_code`: status code representing a successful response.
 
 Class methods that may help you:
 
@@ -260,7 +260,7 @@ Class methods that may help you:
 </details>
 
 <details>
-<summary>Asynchronous validation base class:`AsyncSendAgentBaseClass`</summary>
+<summary>Asynchronous validation base class:AsyncSendAgentBaseClass</summary>
 
 If your inspection method supports asynchrony natively, please inherit this class and implement the abstract methods in
 it, refer to the source code for detailed design.
@@ -270,24 +270,24 @@ encapsulates an asynchronous context manager.
 
 In addition to the abstract methods in `SendAgentBaseClass`, you need to implement the following abstract methods.
 
-1. `set_send_agent` function: assigns your request client to `*self*.agent`.
-    - E.g. `httpx.AsyncClient`
-2. `close_send_agent` function: closes `*self*.agent`. will be called on asynchronous context exit.
-3. `send_request` function: sends a request through the `*self*.agent` property and returns the request result.
+1. `set_send_agent` function: assigns your request client to `self.agent`.
+    - e.g. `httpx.AsyncClient()`
+2. `close_send_agent` function: closes `self.agent`. will be called on asynchronous context exit.
+3. `send_request` function: sends a request through the `self.agent` property and returns the request result.
     - You need to implement both proxied and unproxied requests. This is determined by the `enable_proxy` parameter.
     - You may also need to pay attention to the following configurations when sending requests:
-        1. Request timeout time. You can pass the `*self*.timeout` parameter.
-        2. Whether to ignore certificate validation. The `*self*.certificate_verification` parameter can be passed.
+        1. Request timeout time. You can pass the `self.timeout` parameter.
+        2. Whether to ignore certificate validation. The `self.certificate_verification` parameter can be passed.
         3. Whether to allow redirection.
         4. Set request headers. Random request headers can be obtained by calling the `get_random_headers` method.
         5. Set the request proxy.
-    - Note that the request is considered to have failed when the function runs longer than `*self*.task_timeout`, which
-      is three times `*self*.timeout`.
+    - Note that the request is considered to have failed when the function runs longer than `self.task_timeout`, which
+      is three times `self.timeout`.
 
 </details>
 
 <details>
-<summary>Synchronized validation base class:`ThreadedSendAgentBaseClass`</summary>
+<summary>Synchronized validation base class:ThreadedSendAgentBaseClass</summary>
 
 If your detection method only supports synchronous, please inherit this class and implement the abstract methods in it,
 refer to the source code for detailed design.
@@ -305,13 +305,13 @@ In addition to the abstract methods in `SendAgentBaseClass`, you need to impleme
 3. `send_request` function: sends a request via the `agent` parameter of this method and returns the request result.
     - You need to implement both proxied and unproxied requests. This is determined by the `enable_proxy` parameter.
     - You may also need to pay attention to the following configurations when sending requests:
-        1. Request timeout time. You can pass the `*self*.timeout` parameter.
-        2. Whether to ignore certificate validation. The `*self*.certificate_verification` parameter can be passed.
+        1. Request timeout time. You can pass the `self.timeout` parameter.
+        2. Whether to ignore certificate validation. The `self.certificate_verification` parameter can be passed.
         3. Whether to allow redirection.
         4. Set request headers. Random request headers can be obtained by calling the `get_random_headers` method.
         5. Set the request proxy.
-    - Note that the request is considered to have failed when the function runs longer than `*self*.task_timeout`, which
-      is three times `*self*.timeout`.
+    - Note that the request is considered to have failed when the function runs longer than `self.task_timeout`, which
+      is three times `self.timeout`.
 
 </details>
 
@@ -319,7 +319,10 @@ In addition to the abstract methods in `SendAgentBaseClass`, you need to impleme
 
 <details>
 <summary>Notion Related Changes</summary>
-Because of the complexity of the notion design, it is not easy to modify the notion-related operations. Although the project has tried to hide the specific operation logic as much as possible, you still need to read [the notionAPI design](https://developers.notion.com/reference/intro) carefully.
+
+Because of the complexity of the notion design, it is not easy to modify the notion-related operations. Although the
+project has tried to hide the specific operation logic as much as possible, you still need to
+read [the notionAPI design](https://developers.notion.com/reference/intro) carefully.
 <details>
 <summary>Modifying blocks that should appear in a notification page</summary>
 

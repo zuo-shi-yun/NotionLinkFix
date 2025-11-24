@@ -111,19 +111,19 @@
 2. 配置clash代理。<br>若你不希望通过代理发送请求，请将`config.yml`文件中的`enable_proxy`设为`False`，并忽略本项接下来的内容。
     1. 修改`config.yml`文件的`clash_profile_url`值。
     2. 运行`test.exe`或`test.py`文件，并选择选项1。
-    3. clash配置文件下载成功后，请查看`clash/config.yaml`文件并据此修改`*Clash-related Configuration*`配置项中的其余配置。
+    3. clash配置文件下载成功后，请查看`clash/config.yaml`文件并据此修改`Clash-related Configuration`配置项中的其余配置。
     4. 配置完成后再次运行`test`并选择选项2，该测试将检测`x.com`的连通性，正常情况下，将至少有一个检测方式的检测结果为真。请观察输出以检测代理是否配置正常。
 3. notion相关配置：
-    1. 使用在“必要的准备/准备notion”中获得api key和页面id，完成`config.yml`文件中的`*Notion-related Configuration*`下的配置项。
+    1. 使用在“必要的准备/准备notion”中获得api key和页面id，完成`config.yml`文件中的`Notion-related Configuration`下的配置项。
     2. 运行`test`并选择选项3，系统将以可视化的形式输出存储所有链接的notion页面内容，观察输出结果以检查是否配置正确。
 4. 配置邮件发送功能。<br>若你不希望发送邮件，请将`config.yml`文件中的`send_email`设为`False`，并忽略本项接下来的内容。
-    1. 使用在“必要的准备/准备邮箱”中获得的邮箱相关信息，完成`config.yml`文件中的`*Email-related Configuration*`配置项下的所有配置。
+    1. 使用在“必要的准备/准备邮箱”中获得的邮箱相关信息，完成`config.yml`文件中的`Email-related Configuration`配置项下的所有配置。
     2. 运行`test`并选择选项4，系统将发送邮件到你指定的邮箱。观察输出并查看邮箱以检测是否配置正确。
 5. 第一次运行：
     1. 运行`NotionLinkFix.exe`或`main.py`文件，系统将运行完整的检测流程。
     2. 检测结束后，查看`url_check_result`目录下的html格式的检测结果，点击`INVALID LINKS`查看无效链接。
     3. 因部分网站的反爬能力较强，系统可能误判该网址为无效。<br>
-       若你确定这是误判，请复制链接并将其粘贴到`config.yml`文件中`*Link Verification-related Configuration*`配置项下的
+       若你确定这是误判，请复制链接并将其粘贴到`config.yml`文件中`Link Verification-related Configuration`配置项下的
        `ignore_validity_check_url`中。<br>
        配置在该项中的链接，无论检测结果如何都将视为可联通。该项支持添加多个链接。
 
@@ -167,7 +167,7 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 
 - 无论哪个版本，请注意选择**Clash Premium**的内核，只有这些内核支持通过api控制clash。
 - 请将你的clash内核放置在`clash`目录下，并记录文件名。
-- 修改`Proxy.py`文件的`Proxy`类中的`*self*.clash_path`变量，该值为上一步中记录的clash内核文件名。
+- 修改`Proxy.py`文件的`Proxy`类中的`self.clash_path`变量，该值为上一步中记录的clash内核文件名。
 - 运行`test`的选项2，以检测是否修改成功。
 - 如果代理无法启动，你可能还需要修改`Proxy`类中的`change_clash_proxy`，`open_clash_proxy`和`close_clash_proxy`函数。
 
@@ -189,15 +189,15 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 2. `is_response_valid`函数：通过`response, url_name`参数判断请求的响应是否有效。
     - `response`参数不会为异常，该参数的类型是你发送的请求的响应类型。
     - 你可以实现你自己的检测逻辑，如响应中是否包含`url_name`，响应是否被Cloudflare等反爬虫机制拦截。
-    - 最简单的方式是判断响应状态码是否在`*self*.correct_status_code`中。原有的程序均是如此设计的。
+    - 最简单的方式是判断响应状态码是否在`self.correct_status_code`中。原有的程序均是如此设计的。
 
 可能帮到你的类属性：
 
-1. `*self*.proxy`：记录了`config.yml`文件中的代理配置。
-2. `*self*.timeout`：请求超时时间。超过该值的请求将被视为请求失败。
-3. `*self*.USER_AGENTS`：存储了一些用于请求头的用户客户端，将在`get_random_headers`函数中调用。
-4. `*self*.certificate_verification`：记录了`config.yml`文件中的是否忽略证书验证的配置项。
-5. `*self*.correct_status_code`：代表成功响应的状态码。
+1. `self.proxy`：记录了`config.yml`文件中的代理配置。
+2. `self.timeout`：请求超时时间。超过该值的请求将被视为请求失败。
+3. `self.USER_AGENTS`：存储了一些用于请求头的用户客户端，将在`get_random_headers`函数中调用。
+4. `self.certificate_verification`：记录了`config.yml`文件中的是否忽略证书验证的配置项。
+5. `self.correct_status_code`：代表成功响应的状态码。
 
 可能帮到你的类方法：
 
@@ -214,18 +214,18 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 
 除`SendAgentBaseClass`中的抽象方法，你还需要实现下面这些抽象方法。
 
-1. `set_send_agent`函数：将你的请求客户端赋值给`*self*.agent`。
-    - 如`httpx.AsyncClient`
-2. `close_send_agent`函数：关闭`*self*.agent`。将在异步上下文出口调用。
-3. `send_request`函数：通过`*self*.agent`属性发送请求，并返回请求结果。
+1. `set_send_agent`函数：将你的请求客户端赋值给`self.agent`。
+    - 如`httpx.AsyncClient()`
+2. `close_send_agent`函数：关闭`self.agent`。将在异步上下文出口调用。
+3. `send_request`函数：通过`self.agent`属性发送请求，并返回请求结果。
     - 你需要实现有代理请求和无代理请求。通过`enable_proxy`参数判断。
     - 在发送请求时，你可能还需要注意下面的配置：
-        1. 请求超时时间。可以传递`*self*.timeout`参数。
-        2. 是否忽略证书验证。可以传递`*self*.certificate_verification`参数。
+        1. 请求超时时间。可以传递`self.timeout`参数。
+        2. 是否忽略证书验证。可以传递`self.certificate_verification`参数。
         3. 是否允许重定向。
         4. 设置请求头。可以通过调用`get_random_headers`方法获得随机请求头。
         5. 设置请求代理。
-    - 请注意，当该函数运行时间超过`*self*.task_timeout`时将被视为请求失败，该值为`*self*.timeout`的三倍。
+    - 请注意，当该函数运行时间超过`self.task_timeout`时将被视为请求失败，该值为`self.timeout`的三倍。
 
 </details>
 
@@ -244,12 +244,12 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 3. `send_request`函数：通过本方法的参数`agent`发送请求，并返回请求结果。
     - 你需要实现有代理请求和无代理请求。通过`enable_proxy`参数判断。
     - 在发送请求时，你可能还需要注意下面的配置：
-        1. 请求超时时间。可以传递`*self*.timeout`参数。
-        2. 是否忽略证书验证。可以传递`*self*.certificate_verification`参数。
+        1. 请求超时时间。可以传递`self.timeout`参数。
+        2. 是否忽略证书验证。可以传递`self.certificate_verification`参数。
         3. 是否允许重定向。
         4. 设置请求头。可以通过调用`get_random_headers`方法获得随机请求头。
         5. 设置请求代理。
-    - 请注意，当该函数运行时间超过`*self*.task_timeout`时将被视为请求失败，该值为`*self*.timeout`的三倍。
+    - 请注意，当该函数运行时间超过`self.task_timeout`时将被视为请求失败，该值为`self.timeout`的三倍。
 
 </details>
 
@@ -257,6 +257,7 @@ windows分支中的clash内核版本为win64，linux分支中的clash内核版�
 
 <details>
 <summary>notion相关修改</summary>
+
 因notion设计较为复杂，导致不易修改notion相关操作，尽管项目尽可能的隐去了具体的操作逻辑，但你仍需仔细阅读[notionAPI设计](https://developers.notion.com/reference/intro)。
 <details>
 <summary>修改应该出现在notion页面中的块</summary>
