@@ -160,8 +160,8 @@
 <details>
 <summary>修改clash版本</summary>
 
--
-windows分支中的clash内核版本为win64，linux分支中的clash内核版本为linux-amd64，若你希望使用其他版本的内核，可以参阅[这里](https://www.clash.la/archives/755/)
+- windows分支中的clash内核版本为win64，linux分支中的clash内核版本为linux-amd64，若你希望使用其他版本的内核，
+  可以参阅[这里](https://www.clash.la/archives/755/)。
 - 无论哪个版本，请注意选择**Clash Premium**的内核，只有这些内核支持通过api控制clash。
 - 请将你的clash内核放置在`clash`目录下，并记录文件名。
 - 修改`Proxy.py`文件的`Proxy`类中的`self.clash_path`变量，该值为上一步中记录的clash内核文件名。
